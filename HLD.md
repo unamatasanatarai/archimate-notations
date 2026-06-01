@@ -1,252 +1,830 @@
 # High-Level Design (HLD) — ArchiMate 3.2 Mobile-First Cheat Sheet
 
-## 1. Executive Summary
+---
 
-This document outlines the architecture for a high-performance, mobile-first ArchiMate 3.2 visual reference and cheat sheet. Designed explicitly for beginner architects, the system delivers instantaneous fuzzy search and categorical filtering across approximately 50 frozen ArchiMate notations.
+# 1. Executive Summary
 
-To guarantee zero operational costs and infinite technical durability, the system executes entirely on the client side using modern native web standards (HTML5, Vanilla ES6+ JavaScript, and CSS Custom Properties) hosted on GitHub Pages. By pre-rendering data natively inside the markup and using declarative CSS state-toggling, the platform completely eliminates traditional server-side infrastructure, database overhead, and client-side build-tool complexity.
+This document defines the architecture for a high-performance, mobile-first ArchiMate 3.2 visual reference and cheat sheet.
+
+The application is designed primarily for beginner and intermediate enterprise architects who need rapid access to ArchiMate concepts, notation definitions, layer classifications, and modeling guidance.
+
+The platform provides:
+
+* Instantaneous substring-matching search
+* Layer-based filtering
+* Responsive mobile-first navigation
+* Rule-of-Thumb reference matrix
+* Dark/Light theme support
+* Accessibility-compliant interactions
+* Zero-backend deployment architecture
+
+The solution is implemented entirely using native web technologies:
+
+* HTML5
+* Vanilla ES6+ JavaScript
+* CSS Custom Properties
+
+and hosted via GitHub Pages.
+
+The architecture intentionally eliminates:
+
+* Servers
+* Databases
+* APIs
+* Build pipelines
+* Framework dependencies
+
+to maximize longevity, simplicity, performance, and maintainability.
 
 ---
 
-## 2. Requirements
+# 2. Requirements
 
-### Functional Requirements
+## 2.1 Functional Requirements
 
-* **FR-01: Real-Time Fuzzy Search:** Users can filter the notation repository instantly via an interactive search input matching against element names and descriptions.
-* **FR-02: Categorical Layer Filtering:** Interactive UI components (chips/buttons) allow users to isolate elements by their explicit ArchiMate layer taxonomy.
-* **FR-03: Responsive Card Layout:** Notations transform seamlessly from multi-column grids on desktop layouts into single-column, touch-optimized scroll feeds on mobile viewports.
-* **FR-04: Rule of Thumb Matrix:** A distinct, high-readability static reference section maps architectural layers to their primary organizational query and typical core elements.
-* **FR-05: Persistent Theme State:** A native user toggle changes between Light and Dark visual themes, with settings preserved across sessions.
+### FR-01: Real-Time Substring Search
 
-### Non-Functional Requirements (NFRs)
+Users can instantly search across all ArchiMate notations by:
 
-* **Performance:** Time-to-Interactive (TTI) under 1.0 second on cellular mobile networks; search filter latency under 10 milliseconds per keystroke.
-* **Scalability:** Capable of handling unlimited concurrent user traffic natively via GitHub's global Edge CDN without resource degradation.
-* **Footprint:** Total deployment asset bundle size under 150KB, including all visual vector assets (SVGs) and configuration scripts.
-* **Availability:** 99.99%+ availability backed by GitHub Pages infrastructure.
-* **Compatibility:** Fully functional across all modern Evergreen mobile and desktop web browsers (Safari, Chrome, Firefox, Edge).
+* Element name
+* Element description
 
-### Assumptions
-
-* The ArchiMate specification is completely frozen at version 3.2; no administrative interface, content moderation, dynamic ingestion workflows, or write operations are required.
-* JavaScript is enabled on the client browser for search and filtering functionality; standard CSS degradation ensures fallback text visibility if JS is absent.
-
-### Out-of-Scope
-
-* Downloadable or exportable SVG image assets.
-* Inter-element linking or interactive modeling capabilities.
-* Offline support via Progressive Web Apps (PWA) or Service Workers.
-* User accounts, bookmarking, analytics tracking, or backend telemetry.
+Search updates results in real time as users type.
 
 ---
 
-## 3. System Context
+### FR-02: Layer-Based Filtering
 
-The system operates as an isolated, single-tier client architecture.
+Users can filter notation cards by ArchiMate layer taxonomy using interactive filter chips/buttons.
 
+---
+
+### FR-03: Responsive Card Layout
+
+The interface shall adapt automatically:
+
+| Device  | Layout                    |
+| ------- | ------------------------- |
+| Desktop | Multi-column grid         |
+| Tablet  | Reduced-column grid       |
+| Mobile  | Single-column scroll feed |
+
+---
+
+### FR-04: Rule-of-Thumb Matrix
+
+A static high-visibility reference section maps:
+
+* Architectural layers
+* Typical architectural questions
+* Common element types
+
+This section is visible without requiring filtering.
+
+---
+
+### FR-05: Persistent Theme State
+
+Users can switch between:
+
+* Light Theme
+* Dark Theme
+
+Theme preference is persisted using LocalStorage.
+
+Fallback order:
+
+1. Saved user preference
+2. Browser `prefers-color-scheme`
+3. Light theme
+
+---
+
+### FR-06: Accessibility Support
+
+The application shall comply with WCAG 2.1 AA requirements.
+
+Features include:
+
+* Keyboard navigation
+* Proper semantic HTML
+* ARIA labels
+* Screen-reader announcements
+* Focus indicators
+* Color contrast compliance
+
+---
+
+### FR-07: Search Result Feedback
+
+Users shall receive immediate feedback showing:
+
+```text
+Showing X of Y results
 ```
+
+Results update dynamically while searching.
+
+---
+
+### FR-08: Search Reset Control
+
+A clear-search ("×") button shall appear inside the search input when text is entered.
+
+Selecting it resets:
+
+* Search query
+* Result count
+* Filtered state
+
+---
+
+### FR-09: Empty State Handling
+
+When no matching results exist:
+
+```text
+No results found
+```
+
+The interface displays:
+
+* Empty-state message
+* Clear Search action
+
+---
+
+# 3. Non-Functional Requirements
+
+## Performance
+
+| Metric                    | Target     |
+| ------------------------- | ---------- |
+| Time to Interactive (TTI) | < 1 second |
+| Search Latency            | < 10 ms    |
+| Frame Rate                | 60 FPS     |
+| Initial Payload           | < 150 KB   |
+
+Performance targets apply on:
+
+* Mid-tier mobile hardware
+* 4G network conditions
+
+---
+
+## Scalability
+
+The system shall support effectively unlimited concurrent users through GitHub Pages CDN edge distribution.
+
+No server-side scaling activities are required.
+
+---
+
+## Availability
+
+Target availability:
+
+```text
+99.99%+
+```
+
+provided by GitHub Pages infrastructure.
+
+---
+
+## Compatibility
+
+Supported browsers:
+
+* Chrome
+* Safari
+* Firefox
+* Edge
+
+All current evergreen browser releases are supported.
+
+---
+
+## Accessibility
+
+Target:
+
+```text
+WCAG 2.1 AA
+```
+
+---
+
+# 4. Assumptions
+
+* ArchiMate 3.2 content is frozen.
+* No administrative interface is required.
+* No content editing occurs at runtime.
+* JavaScript is enabled.
+* All notation data is known before deployment.
+* GitHub Pages remains the hosting platform.
+
+---
+
+# 5. Out of Scope
+
+The following capabilities are intentionally excluded:
+
+### Content Management
+
+* CMS
+* Runtime editing
+* Admin console
+
+### User Features
+
+* User accounts
+* Authentication
+* Favorites/bookmarks
+* Personalization
+
+### Analytics
+
+* User tracking
+* Behavioral analytics
+* Telemetry
+
+### Modeling Features
+
+* Diagram editing
+* Inter-element relationships
+* Interactive modeling
+
+### Offline Features
+
+* PWA support
+* Service Workers
+
+### Asset Export
+
+* SVG download
+* Image export
+
+---
+
+# 6. System Context
+
+The application operates as a single-tier architecture.
+
+```text
 +-------------------------------------------------------+
 |                    Client Browser                     |
 |                                                       |
 |   +-------------------+       +-------------------+   |
-|   |  User Interface   | ----> |   Vanilla JS Engine|   |
-|   | (DOM Grid/Cards)  | <---- | (State Controller)|   |
+|   |  User Interface   | ----> | Vanilla JS Engine |   |
+|   | (DOM Grid/Cards)  | <---- | State Controller  |   |
 |   +-------------------+       +-------------------+   |
 |             |                           |             |
 +-------------|---------------------------|-------------+
-              | (HTTPS Request)           | (Local Reads)
+              |                           |
               v                           v
     +-------------------+       +-------------------+
-    | GitHub Pages CDN  |       |   LocalStorage    |
-    |  (Static Assets)  |       |  (Theme Cache)    |
+    | GitHub Pages CDN  |       | LocalStorage      |
+    | Static Assets     |       | Theme Preference  |
     +-------------------+       +-------------------+
-
 ```
-
-### System Actors & Boundaries
-
-* **End User:** Accesses the site primarily via a mobile device to rapidly cross-reference ArchiMate standards.
-* **GitHub Pages CDN:** The sole external infrastructure dependency, responsible for serving static compiled markup, styles, and logic over HTTPS.
-* **Browser LocalStorage:** Client-side sandbox used exclusively to persist the user's Dark/Light mode theme state.
 
 ---
 
-## 4. High-Level Architecture
+## Actors
 
-The internal client architecture is broken down into three tightly integrated layers residing within a single codebase layer.
+### End User
 
+Consumes the reference site from:
+
+* Mobile devices
+* Tablets
+* Desktop browsers
+
+---
+
+### GitHub Pages CDN
+
+Serves:
+
+* HTML
+* CSS
+* JavaScript
+* SVG assets
+
+---
+
+### Browser LocalStorage
+
+Stores:
+
+```javascript
+theme = "light" | "dark"
 ```
-+---------------------------------------------------------------------------------------+
-|                                    Client DOM Space                                   |
-|                                                                                       |
-|   +-------------------------------------------------------------------------------+   |
-|   | Search & Filter Controls                                                      |   |
-|   | [ Text Input Field ]  [ Layer Selector Buttons (Strategy, Business, etc.) ]   |   |
-|   +-------------------------------------------------------------------------------+   |
-|                                           |                                           |
-|                                           v (Dispatches Events)                       |
-|   +-------------------------------------------------------------------------------+   |
-|   | Vanilla JS Controller (State Processing)                                      |   |
-|   | - Listens to input & click vectors                                            |   |
-|   | - Tokenizes search string; reads target layer                                 |   |
-|   | - Executes fast loop over element NodeList checking data-* boundaries          |   |
-|   +-------------------------------------------------------------------------------+   |
-|                                           |                                           |
-|                                           v (Applies/Removes Classes)                 |
-|   +-------------------------------------------------------------------------------+   |
-|   | Presentation Card Grid                                                        |   |
-|   | +-----------------------+ +-----------------------+ +-----------------------+ |   |
-|   | | Card (Active)         | | Card (Active)         | | Card (.hidden)        | |   |
-|   | +-----------------------+ +-----------------------+ +-----------------------+ |   |
-|   +-------------------------------------------------------------------------------+   |
-+---------------------------------------------------------------------------------------+
 
+---
+
+# 7. High-Level Architecture
+
+## Client-Side Architecture
+
+```text
++------------------------------------------------------+
+| Search & Filter Controls                             |
+|                                                      |
+| [Search] [Clear] [Layer Chips]                       |
++---------------------------+--------------------------+
+                            |
+                            v
++------------------------------------------------------+
+| Vanilla JS Controller                                |
+|                                                      |
+| - Search processing                                  |
+| - Layer filtering                                    |
+| - Result counting                                    |
+| - Theme state                                        |
++---------------------------+--------------------------+
+                            |
+                            v
++------------------------------------------------------+
+| Presentation Layer                                   |
+|                                                      |
+| - Rule of Thumb Matrix                               |
+| - Notation Card Grid                                 |
+| - Empty States                                       |
+| - Result Count Display                               |
++------------------------------------------------------+
 ```
 
-### Core Components
+---
 
-* **Layout Structure (`index.html`):** Contains the complete skeleton, the static "Rule of Thumb" table, and all ~50 notation cards pre-rendered server-side/compile-time into the standard DOM tree.
-* **Design Engine (`styles.css`):** Formulated entirely using native modern CSS properties. Implements a responsive Flexbox/Grid system based on `auto-fit` or `auto-fill` boundaries, along with a high-performance utility system mapping hidden states to a strict performance utility class:
+# 8. Layer Taxonomy
+
+The notation repository is organized into 9 categories:
+
+1. Application
+2. Business
+3. Composite
+4. Implementation & Migration
+5. Motivation
+6. Physical
+7. Relationship
+8. Strategy
+9. Technology
+
+These categories drive filter generation and classification.
+
+---
+
+# 9. Core Components
+
+## 9.1 Layout Structure (`index.html`)
+
+Contains:
+
+* Header
+* Search controls
+* Layer filter controls
+* Rule-of-Thumb matrix
+* Result count region
+* Empty state region
+* 71 pre-rendered notation cards
+
+---
+
+## 9.2 Styling Layer (`styles.css`)
+
+Responsibilities:
+
+* Responsive grid
+* Mobile-first design
+* Theme system
+* Accessibility styling
+* Utility classes
+
+Example:
+
 ```css
-.card.hidden { display: none !important; }
-
+.card.hidden {
+    display: none !important;
+}
 ```
-
-
-* **Application Controller (`app.js`):** Instantiates event hooks to intercept text queries and filter interactions. It maintains state exclusively within the DOM by altering specific element class lists based on declarative criteria.
 
 ---
 
-## 5. Data Architecture
+## 9.3 Application Controller (`app.js`)
 
-### Core Data Structure
+Responsibilities:
 
-Because all components are pre-rendered, the HTML element structure serves directly as the indexed data layer. To optimize extraction without parsing nested text nodes at runtime, every card wraps its schema elements cleanly inside native HTML5 data attributes:
+* Search processing
+* Layer filtering
+* Result counting
+* Theme persistence
+* Accessibility announcements
+
+---
+
+# 10. Data Architecture
+
+## Data Model
+
+Each notation is stored directly inside the DOM.
+
+Example:
 
 ```html
-<div class="card" 
-     data-name="material" 
-     data-description="physical matter used or produced by the enterprise" 
+<div class="card"
+     data-name="material"
+     data-description="physical matter used or produced by the enterprise"
      data-layer="technology">
+
   <div class="card-visual">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
-       </svg>
+      <svg></svg>
   </div>
-  <h3 class="card-title">Material</h3>
-  <p class="card-body">Physical matter used or produced by the enterprise.</p>
-  <span class="card-badge">Technology</span>
+
+  <h3>Material</h3>
+
+  <p>
+      Physical matter used or produced by the enterprise.
+  </p>
+
+  <span>Technology</span>
 </div>
-
 ```
-
-### Storage Choices & Retention
-
-* **Primary Storage:** In-memory browser DOM nodes.
-* **Data Lifecycle:** Immutable at runtime. Edits are implemented purely by modifying the hardcoded static `index.html` source repository file.
-* **Theme Persistence:** A simple key-value string mapping stored locally inside the client user agent: `theme: "dark"` or `theme: "light"`.
 
 ---
 
-## 6. API & Integration Design
+## Storage Strategy
 
-* **External Endpoints:** None. The application runs autonomously and requires no API gateway, third-party backend tokens, or database connections.
-* **Integration Patterns:** Isolated runtime loop. The JavaScript execution layer queries the DOM NodeList natively using standard query selectors:
+### Primary Storage
+
+Browser DOM
+
+### Persistence
+
+LocalStorage
+
 ```javascript
-const cards = document.querySelectorAll('.card');
-
+theme = "dark"
+theme = "light"
 ```
 
+### Data Lifecycle
 
+Immutable at runtime.
+
+Changes require repository updates and redeployment.
 
 ---
 
-## 7. Scalability & Performance
+# 11. Search & Filtering Design
 
-### Scaling Strategy
-
-Because hosting relies entirely on GitHub Pages, scaling capabilities are shifted directly to GitHub's infrastructure providers. Traffic spikes are seamlessly absorbed via edge-caching mechanics, meaning the host can handle millions of concurrent requests effortlessly without increasing backend compute loads.
-
-### Bottleneck Analysis & Caching
-
-Traditional frontend bottlenecks stem from dynamic template interpolation or heavy framework hydration loops. This architecture completely prevents these issues by executing structural filtering loops via pre-cached DOM nodes:
+## Search Algorithm
 
 ```javascript
-// Extremely fast, low-memory filtering pattern
-const query = inputField.value.toLowerCase().trim();
-const activeLayer = currentLayerFilter;
+const query = input.value.toLowerCase().trim();
 
 cards.forEach(card => {
-  const matchesSearch = card.dataset.name.includes(query) || card.dataset.description.includes(query);
-  const matchesLayer = (activeLayer === 'all') || (card.dataset.layer === activeLayer);
 
-  if (matchesSearch && matchesLayer) {
-    card.classList.remove('hidden');
-  } else {
-    card.classList.add('hidden');
-  }
+    const matchesSearch =
+        card.dataset.name.includes(query) ||
+        card.dataset.description.includes(query);
+
+    const matchesLayer =
+        activeLayer === 'all' ||
+        card.dataset.layer === activeLayer;
+
+    card.classList.toggle(
+        'hidden',
+        !(matchesSearch && matchesLayer)
+    );
 });
-
 ```
 
-Because the total loop size is tightly capped at roughly 50 iterations, execution takes less than 2 milliseconds, maintaining a locked 60 FPS profile even on underpowered mobile processors.
+---
+
+## Search Characteristics
+
+| Property         | Value        |
+| ---------------- | ------------ |
+| Matching Style   | Substring    |
+| Case Sensitivity | None         |
+| Debouncing       | Not Required |
+| Dataset Size     | 71 Elements  |
+| Expected Latency | <10ms        |
 
 ---
 
-## 8. Security & Compliance
+## Search UX
 
-### AuthN / AuthZ
+### Result Count
 
-Not applicable. All reference data is entirely public and unauthenticated.
+```text
+Showing 12 of 71 results
+```
 
-### Threat Landscape Mitigation
+### Empty State
 
-| Threat Vector | Severity | Architectural Defense |
-| --- | --- | --- |
-| **Cross-Site Scripting (XSS)** | Low | Because the runtime logic uses **zero** dynamic evaluation commands (`eval()`, `innerHTML`, or `dangerouslySetInnerHTML`), it is impossible to inject malicious executable strings into the application context via search fields. |
-| **Content Defacement** | Medium | Protected by standard GitHub repository authorization controls. Changes require explicit write clearance to the primary repository or approved Pull Request triggers. |
-| **Data Privacy (PII)** | None | The platform operates with no telemetry, tracking scripts, tracking cookies, or dynamic logging inputs, making it fully compliant with GDPR and CCPA out-of-the-box. |
+```text
+No results found
+```
 
----
+### Recovery Action
 
-## 9. Reliability & Operations
-
-### High Availability (HA) & Disaster Recovery (DR)
-
-High availability is achieved through geographic distribution provided natively by GitHub's globally decentralized Content Delivery Network. If a local CDN node suffers an outage, upstream DNS routing automatically pushes user sessions to adjacent web server clusters. Backups match the strict commit tracking history of the master Git repository version log.
-
-### Monitoring, Logging & Alerting
-
-To preserve absolute user privacy and ensure a small footprint, tracking tools are completely absent. Health status queries can be performed using native browser error trackers or external site uptime monitors (e.g., UptimeRobot).
+```text
+Clear Search
+```
 
 ---
 
-## 10. Architecture Decision Records (ADRs)
+# 12. Theme Management
 
-### ADR 01: Rejection of Single-Page Application (SPA) Frameworks
+Initialization:
 
-* **Context:** The application needs a modern look and must support rapid client-side text filtering and card layout rendering.
-* **Decision:** Reject frameworks like React, Vue, or Alpine.js in favor of native Vanilla ES6 JavaScript.
-* **Rationale:** Introducing an abstraction layer adds unnecessary script weight, hydration delays, and build pipeline dependencies for a simple, frozen 50-item dataset.
-* **Tradeoffs:** Requires writing manual DOM traversal selectors and setting up explicit class management wrappers, but provides maximum longevity and optimal performance.
+```javascript
+const savedTheme =
+    localStorage.getItem('theme');
 
-### ADR 02: Selection of Dom State Toggling over Dynamic Component Generation
+const systemTheme =
+    window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
+      ? 'dark'
+      : 'light';
 
-* **Context:** Choosing between generating markup dynamically from raw JSON data inputs or filtering pre-rendered components.
-* **Decision:** Pre-render all 50 items directly in the raw HTML template and toggle visibility with a `.hidden` CSS class.
-* **Rationale:** Eliminates client-side template processing bottlenecks, makes structural assets crawlable by search engine bots for optimal SEO without SSR middleware, and radically simplifies search filtering code.
-* **Tradeoffs:** The initial raw HTML asset payload is slightly larger, but this is offset by the fact that it eliminates the need to fetch separate external JSON data files over HTTP.
+const theme =
+    savedTheme ||
+    systemTheme ||
+    'light';
+```
+
+Priority:
+
+1. Saved preference
+2. Browser preference
+3. Default light
 
 ---
 
-## 11. Risks & Open Questions
+# 13. API & Integration Design
 
-* **Browser Compatibility Risk:** Relying on cutting-edge modern CSS features (like native CSS Nesting or Container Queries) might lead to layout inconsistencies on ancient legacy devices.
-* *Mitigation:* Stick to widely supported CSS specifications (Flexbox, standard Grid, CSS variables) that are robustly implemented across all mobile browsers released within the past decade.
+## External APIs
 
+None.
 
+## External Services
+
+Only:
+
+* GitHub Pages
+
+No:
+
+* REST APIs
+* GraphQL
+* Databases
+* Authentication providers
+* Analytics providers
 
 ---
 
-## 12. Future Evolution
+# 14. Scalability & Performance
 
-If the target scope expands in future iterations to include later standard specifications (e.g., ArchiMate 4.0), the application can cleanly scale by simply injecting additional pre-rendered card nodes into the main layout container or utilizing a local build script to loop over JSON definitions and output a single compiled `index.html` file. No core structural changes to the search engine, style layouts, or hosting infrastructure will be required.
+## Scalability Strategy
+
+Scaling responsibility is delegated entirely to GitHub's CDN infrastructure.
+
+Benefits:
+
+* Global edge caching
+* No compute scaling
+* No database bottlenecks
+
+---
+
+## Performance Optimization
+
+### Optimization Techniques
+
+* Pre-rendered HTML
+* Zero hydration
+* No framework runtime
+* No network fetches
+* Native DOM filtering
+* Inline SVG assets
+
+### Expected Runtime
+
+Filtering:
+
+```text
+< 2 ms
+```
+
+on modern mobile devices.
+
+---
+
+# 15. Security, Privacy & Compliance
+
+## Authentication & Authorization
+
+Not required.
+
+All content is publicly accessible.
+
+---
+
+## Threat Assessment
+
+| Threat                | Severity | Mitigation                                            |
+| --------------------- | -------- | ----------------------------------------------------- |
+| XSS                   | Low      | No `eval()`, `innerHTML`, or dynamic script execution |
+| Repository Defacement | Medium   | GitHub access controls and PR reviews                 |
+| PII Exposure          | None     | No user data collected                                |
+| Privacy Compliance    | None     | No cookies, tracking, or telemetry                    |
+
+---
+
+## Accessibility Requirements
+
+### WCAG 2.1 AA
+
+Mandatory support:
+
+* Semantic HTML
+* Keyboard accessibility
+* Focus indicators
+* ARIA labels
+* Color contrast compliance
+
+### Screen Reader Support
+
+```html
+<div aria-live="polite">
+    Showing 12 of 71 results
+</div>
+```
+
+---
+
+## SEO Requirements
+
+The application shall include:
+
+### Semantic HTML5
+
+* header
+* main
+* section
+* article
+* footer
+
+### Structured Metadata
+
+* JSON-LD
+* Open Graph tags
+* Twitter Card tags (optional)
+
+---
+
+# 16. Reliability & Operations
+
+## High Availability
+
+Provided by GitHub Pages CDN distribution.
+
+---
+
+## Disaster Recovery
+
+Recovery source:
+
+```text
+Git Repository Commit History
+```
+
+All content can be reconstructed from source control.
+
+---
+
+## Monitoring
+
+Application intentionally contains:
+
+* No analytics
+* No telemetry
+* No event tracking
+
+Optional external monitoring:
+
+* UptimeRobot
+* GitHub availability monitoring
+
+---
+
+# 17. Performance Validation
+
+Testing baseline:
+
+| Category          | Requirement     |
+| ----------------- | --------------- |
+| Device            | Mid-tier mobile |
+| Network           | 4G throttling   |
+| Browser           | Chrome Mobile   |
+| Audit Tool        | Lighthouse      |
+| Synthetic Testing | WebPageTest     |
+
+Success criteria:
+
+* TTI < 1s
+* Accessibility ≥ 95
+* Performance ≥ 95
+* Best Practices ≥ 95
+
+---
+
+# 18. Architecture Decision Records (ADRs)
+
+## ADR-01: Reject SPA Frameworks
+
+**Decision:** Use Vanilla ES6+ JavaScript.
+
+**Rationale:**
+
+* Smaller bundle size
+* Faster startup
+* No hydration overhead
+* No build dependencies
+
+---
+
+## ADR-02: Pre-Rendered DOM Strategy
+
+**Decision:** Render all 71 notation cards directly in HTML.
+
+**Rationale:**
+
+* SEO-friendly
+* Zero fetch requests
+* Simpler architecture
+* Better performance
+
+---
+
+## ADR-03: Search Strategy
+
+**Decision:** Use native substring matching.
+
+**Rationale:**
+
+* <10ms latency
+* Simple implementation
+* Suitable for fixed dataset size
+
+---
+
+## ADR-04: Accessibility Commitment
+
+**Decision:** Adopt WCAG 2.1 AA.
+
+**Rationale:**
+
+* Inclusive design
+* Broader usability
+* Better quality standards
+
+---
+
+# 19. Risks & Mitigations
+
+| Risk                                | Impact | Mitigation                                                   |
+| ----------------------------------- | ------ | ------------------------------------------------------------ |
+| Browser support gaps for modern CSS | Medium | Restrict implementation to well-supported CSS features       |
+| Future ArchiMate taxonomy changes   | Low    | Content-only updates required                                |
+| GitHub Pages outage                 | Low    | Static site can be redeployed elsewhere without code changes |
+| Dataset growth beyond current scope | Low    | Filtering logic scales efficiently into hundreds of cards    |
+
+---
+
+# 20. Future Evolution
+
+Future enhancements may include:
+
+### Content Expansion
+
+* ArchiMate 4.x support
+* Additional notation sets
+
+### Build Automation
+
+* Optional JSON-to-HTML generation script
+* Static content compilation
+
+### Documentation Enhancements
+
+* Layer comparison views
+* Interactive learning guides
+* Printable cheat-sheet mode
+
+The architecture supports these enhancements without requiring changes to the fundamental client-side design, search engine, or hosting model.
