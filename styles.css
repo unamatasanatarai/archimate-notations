@@ -706,3 +706,202 @@ body {
     grid-template-columns: repeat(6, 1fr);
   }
 }
+
+/* ==========================================================================
+   Rule-of-Thumb Modeling Guide Layout & Styling Specifications
+   ========================================================================== */
+.guide-section-wrapper {
+  margin-top: 4rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.guide-section-header {
+  margin-bottom: 1.75rem;
+}
+.guide-section-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+.guide-section-header p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive Grid for Layer Guide Cards */
+.guide-layers-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .guide-layers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .guide-layers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Layer Guide Card block */
+.guide-layer-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  display: flex;
+  flex-direction: column;
+}
+.guide-layer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.guide-layer-header {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--badge-text-dark);
+  letter-spacing: 0.02em;
+}
+
+.guide-layer-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1;
+}
+
+.guide-rule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+.guide-rule-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.guide-when-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.guide-then-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--badge-text-dark);
+  align-self: flex-start;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Memory and Structural Rules wrapper */
+.guide-summary-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .guide-summary-row {
+    flex-direction: row;
+  }
+}
+
+.guide-summary-card {
+  flex: 1;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.guide-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.guide-summary-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.structural-rule-card {
+  border-left: 5px solid #22c55e;
+}
+.memory-aid-card {
+  border-left: 5px solid #f59e0b;
+}
+
+.rule-math {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--bg-primary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rule-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.rule-details p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.memory-list {
+  list-style: none;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.memory-list li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: 1.1rem;
+}
+.memory-list li::before {
+  content: "•";
+  color: #f59e0b;
+  font-weight: bold;
+  font-size: 1.1rem;
+  position: absolute;
+  left: 0.1rem;
+  top: -0.15rem;
+}

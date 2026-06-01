@@ -1335,6 +1335,220 @@
         <p><strong>Core Structural Guideline Rule:</strong> Active structures *perform* behaviors. Behaviors *realize* services and *access* passive structural data or artifacts.</p>
       </div>
     </section>
+
+    <section class="guide-section-wrapper" id="modeling-guide" aria-label="ArchiMate Core Modeling Rule-of-Thumb Guide">
+      <div class="guide-section-header">
+        <h2>Rule-of-Thumb Modeling Guide</h2>
+        <p>Quick reference guidelines for choosing the precise ArchiMate 3.2 element based on modeling intent.</p>
+      </div>
+
+      <div class="guide-layers-grid">
+        <!-- Strategy Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-strategy-indicator">Strategy Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model who owns or performs strategic work</span>
+              <span class="guide-then-badge badge-strategy">Use Resource</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model what the organization can do</span>
+              <span class="guide-then-badge badge-strategy">Use Capability</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model how value is delivered</span>
+              <span class="guide-then-badge badge-strategy">Use Value Stream</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model strategic direction or planned action</span>
+              <span class="guide-then-badge badge-strategy">Use Course of Action</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-business-indicator">Business Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a person, team, or organization performing work</span>
+              <span class="guide-then-badge badge-business">Use Business Actor</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model responsibility independent of a specific person</span>
+              <span class="guide-then-badge badge-business">Use Business Role</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model interaction points</span>
+              <span class="guide-then-badge badge-business">Use Business Interface</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a sequence of activities</span>
+              <span class="guide-then-badge badge-business">Use Business Process</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model grouped business behavior</span>
+              <span class="guide-then-badge badge-business">Use Business Function</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model functionality offered to consumers</span>
+              <span class="guide-then-badge badge-business">Use Business Service</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model business information</span>
+              <span class="guide-then-badge badge-business">Use Business Object</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a formal agreement</span>
+              <span class="guide-then-badge badge-business">Use Contract</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-application-indicator">Application Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a software system</span>
+              <span class="guide-then-badge badge-application">Use Application Component</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model application interaction points</span>
+              <span class="guide-then-badge badge-application">Use Application Interface</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model internal application behavior</span>
+              <span class="guide-then-badge badge-application">Use Application Function</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model exposed application functionality</span>
+              <span class="guide-then-badge badge-application">Use Application Service</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model application-managed information</span>
+              <span class="guide-then-badge badge-application">Use Data Object</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technology Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-technology-indicator">Technology Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model infrastructure hosting applications</span>
+              <span class="guide-then-badge badge-technology">Use Node</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model physical computing hardware</span>
+              <span class="guide-then-badge badge-technology">Use Device</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model operating systems or middleware</span>
+              <span class="guide-then-badge badge-technology">Use System Software</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model technical processing behavior</span>
+              <span class="guide-then-badge badge-technology">Use Technology Function</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model infrastructure functionality offered for use</span>
+              <span class="guide-then-badge badge-technology">Use Technology Service</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model deployable files or packages</span>
+              <span class="guide-then-badge badge-technology">Use Artifact</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Physical Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-physical-indicator">Physical Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model machinery or equipment</span>
+              <span class="guide-then-badge badge-physical">Use Equipment</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model physical locations</span>
+              <span class="guide-then-badge badge-physical">Use Facility</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model logistics behavior</span>
+              <span class="guide-then-badge badge-physical">Use Distribution Network</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model physical goods or substances</span>
+              <span class="guide-then-badge badge-physical">Use Material</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motivation Layer -->
+        <div class="guide-layer-card">
+          <div class="guide-layer-header layer-motivation-indicator">Motivation Layer</div>
+          <div class="guide-layer-content">
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model interested parties</span>
+              <span class="guide-then-badge badge-motivation">Use Stakeholder</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a force driving change</span>
+              <span class="guide-then-badge badge-motivation">Use Driver</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to assess the current situation</span>
+              <span class="guide-then-badge badge-motivation">Use Assessment</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a desired future state</span>
+              <span class="guide-then-badge badge-motivation">Use Goal</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a measurable result</span>
+              <span class="guide-then-badge badge-motivation">Use Outcome</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model something that must be satisfied</span>
+              <span class="guide-then-badge badge-motivation">Use Requirement</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a guiding design rule</span>
+              <span class="guide-then-badge badge-motivation">Use Principle</span>
+            </div>
+            <div class="guide-rule-item">
+              <span class="guide-when-label">When I want to model a restriction</span>
+              <span class="guide-then-badge badge-motivation">Use Constraint</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Memory / Core structural Rules section -->
+      <div class="guide-summary-row">
+        <div class="guide-summary-card structural-rule-card">
+          <h3>Core Structural Rule</h3>
+          <p class="rule-math">Active Structure &rarr; Performs Behavior &rarr; Accesses Passive Structure</p>
+          <div class="rule-details">
+            <p><strong>Active structures</strong> perform the actual work (e.g. Actor, Component, Node).</p>
+            <p><strong>Behavioral elements</strong> describe the work being performed (e.g. Process, Function, Service).</p>
+            <p><strong>Passive structures</strong> represent information, materials, or artifacts used or produced by that work (e.g. Object, Artifact, Material).</p>
+          </div>
+        </div>
+
+        <div class="guide-summary-card memory-aid-card">
+          <h3>Memory Aid</h3>
+          <p class="rule-math">Actor &rarr; Does &rarr; Uses</p>
+          <ul class="memory-list">
+            <li><strong>Active Structure:</strong> Who or What performs the work</li>
+            <li><strong>Behavior:</strong> What specific work is performed</li>
+            <li><strong>Passive Structure:</strong> What is used, accessed, or produced by that work</li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
   <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark/light high contrast mode" title="Toggle Theme">
